@@ -4,5 +4,4 @@ module.exports.databaseMiddleware = async function databaseMiddleware(req, res, 
     const db = await pg();
     req.db = db;
     next();
-
 }
