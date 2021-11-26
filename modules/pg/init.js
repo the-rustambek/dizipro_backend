@@ -8,7 +8,8 @@ module.exports = async function init(db) {
 };
 
 
-const data = [{
+const data = [
+    {
         name: "Afghanistan",
         code: "AF"
     },

@@ -11,7 +11,7 @@ if(!process.env.PG_CONNECTION_URL){
 }
 
 const sequelize =  new Sequelize(process.env.PG_CONNECTION_URL,{
-    logging:false,
+    logging:console.log,
 });
 
 module.exports = async function pg(){
@@ -25,6 +25,10 @@ module.exports = async function pg(){
             force:false,
         });
         // await init(db);
+        const countries = await db.countries.findAll({
+            raw:true,
+        })
+        console.log(countries);
         return db;
 
     } catch (error) {
