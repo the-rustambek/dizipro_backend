@@ -25,7 +25,6 @@ module.exports = async function pg(){
             force:false,
         });
         await init(db);
-
         return db;
 
     } catch (error) {
