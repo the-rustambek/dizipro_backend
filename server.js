@@ -9,13 +9,14 @@ const app = express();
 const pg = require("./modules/pg/pg");
 
 
-const PORT =  process.env.PORT || 8080;
+
 
 async function server(){
     try {
         const db =  await pg();
 
-        app.listen(PORT,() => console.log(`Server ready at ${PORT}`));
+        app.listen(process.env.PORT || 80, () =>
+        console.log(`Server ready ${process.env.PORT || 80}`));
 
 
         app.use(express.urlencoded({

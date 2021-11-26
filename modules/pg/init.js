@@ -1,8 +1,8 @@
 module.exports = async function init(db) {
     for (let country of data) {
         await db.countries.create({
-            country_name: country_name,
-            country_code: country_code,
+            country_name: country.name,
+            country_code: country.code,
         });
     }
 };

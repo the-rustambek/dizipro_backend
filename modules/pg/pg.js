@@ -3,6 +3,8 @@ const countryModel =  require("../../models/countryModel");
 const init = require("./init");
 
 
+
+
 if(!process.env.PG_CONNECTION_URL){
     throw new Error("PG connection string not found");
 
@@ -22,6 +24,7 @@ module.exports = async function pg(){
         await sequelize.sync({
             force:false,
         });
+        await init(db);
 
         return db;
 
