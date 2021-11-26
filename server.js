@@ -3,6 +3,7 @@ const express = require("express");
 
 
 const {databaseMiddleware} =  require("./middlewares/databaseMiddleware");
+const {customErrorMiddleware} =  require("./middlewares/customErrorMiddleware");
 const routes = require("./routes");
 const app = express();
 
@@ -18,7 +19,9 @@ async function server(){
             extended:true,
         }));
 
-        app.use(databaseMiddleware());
+        app.use(databaseMiddleware);
+
+        app.use(customErrorMiddleware)
 
         app.use("/v1",routes);
     } catch (error) {
