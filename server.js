@@ -1,5 +1,7 @@
 require("dotenv").config();
 const express = require("express");
+
+
 const {databaseMiddleware} =  require("./middlewares/databaseMiddleware");
 const routes = require("./routes");
 const app = express();
