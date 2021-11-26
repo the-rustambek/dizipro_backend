@@ -24,7 +24,7 @@ module.exports = async function pg(){
         await sequelize.sync({
             force:false,
         });
-        await init(db);
+        // await init(db);
         return db;
 
     } catch (error) {
