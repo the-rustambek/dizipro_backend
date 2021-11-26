@@ -5,7 +5,7 @@ module.exports.customError = class customError extends Error {
     }
 }
 
-module.exports.errorHandlerMiddleware = function errorHandlerMiddleware(
+module.exports.errorHandleMiddleware = function errorHandleMiddleware(
     error, req, res, next
 ) {
     res.status(error.code || 500).json({
