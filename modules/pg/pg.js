@@ -9,7 +9,7 @@ if(!process.env.PG_CONNECTION_URL){
 }
 
 const sequelize =  new Sequelize(process.env.PG_CONNECTION_URL,{
-    logging:console.log,
+    logging:false,
 });
 
 module.exports = async function pg(){

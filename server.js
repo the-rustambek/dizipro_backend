@@ -5,8 +5,9 @@ const express = require("express");
 // const {databaseMiddleware} =  require("./middlewares/databaseMiddleware");
 const {customErrorMiddleware} =  require("./middlewares/customErrorMiddleware");
 const routes = require("./routes");
-const pg = require("./modules/pg/pg");
 const app = express();
+const pg = require("./modules/pg/pg");
+
 
 const PORT =  process.env.PORT || 8080;
 
@@ -16,11 +17,12 @@ async function server(){
 
         app.listen(PORT,() => console.log(`Server ready at ${PORT}`));
 
-        app.use(express.json());
 
         app.use(express.urlencoded({
             extended:true,
         }));
+
+        app.use(express.json());
 
         app.use((req,res,next)=>{
             req.db = db;
@@ -31,7 +33,7 @@ async function server(){
 
         // app.use(databaseMiddleware);
         app.use("/v1",routes);
-        
+
     } catch (error) {
         console.log("Server error:", error);
     }
