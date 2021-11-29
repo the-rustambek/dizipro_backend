@@ -2,6 +2,7 @@ const {Sequelize } = require('sequelize');
 const countryModel =  require("../../models/countryModel");
 const relations = require('../../models/relations');
 const userModel = require("../../models/userModel");
+const userSessionsModel = require('../../models/userSessionsModel');
 const init = require("./init");
 
 // const {sequelize} = require("sequelize-joi");
@@ -30,6 +31,8 @@ module.exports = async function pg(){
         let db =  {};
         db.countries = await countryModel(sequelize, Sequelize);
         db.users = await userModel(sequelize, Sequelize);
+        db.sessions =  await userSessionsModel(sequelize,Sequelize);
+     
         await relations(db);
 
         await sequelize.sync({

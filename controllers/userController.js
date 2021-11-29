@@ -8,9 +8,32 @@ module.exports = class userController {
 
             const data = await userValidations.userCreateAccountValidation(req.body, res.error);
 
-            const user = await req.db.users.create(data);
+            const user = await req.db.users.create({
+                ...data,
+                user_password:generateCrypt(data.user_password),
+            });
+            // console.log(user);
 
-            console.log(user);
+
+            const session = await req.db.sessions.create({
+                session_user_agent: req.headers["user_agent"] || "Unknown",
+                user_id: user_dataValues.user_id,
+            });
+
+            
+			const token = createToken({
+				session_id: session.dataValues.session_id,
+				role: "user",
+			});
+
+
+            res.status(201).json({
+                ok:true,
+                message:"User created successfully",
+                data:{
+
+                }
+            })
         } catch (error) {
 
             console.log(error, "error chiqyapti")
