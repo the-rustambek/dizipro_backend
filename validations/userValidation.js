@@ -10,4 +10,11 @@ module.exports = class userValidations {
             country_id: Joi.number().required().error(new customError(400, "Country id is invalid")),
         }).validateAsync(data);
     }
+
+    static async userLoginAccountValidation(data, customError){
+        return await Joi.object({
+            user_email: Joi.string().email().required().lowercase().error(new customError(400, "Name is invalid")),
+            user_password: Joi.string().required().min(4).error(new customError(400, "Password is invalid")),
+        }).validateAsync(data)
+    }
 }
