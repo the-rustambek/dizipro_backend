@@ -1,11 +1,14 @@
-const {generateCrypt} = require("../modules/bcrypt")
-module.exports = class userController{
-    static async userCreateAccountPostController(req, res,next){
+const {
+    generateCrypt
+} = require("../modules/bcrypt")
+const userValidations = require("../validations/userValidation")
+module.exports = class userController {
+    static async userCreateAccountPostController(req, res, next) {
         try {
-            const user  = await req.db.users.create({
-                ...req.body,
-                user_password: generateCrypt(req?.body?.user_password),
-            });
+
+            const data = await userValidations.userCreateAccountValidation(req.body, res.error);
+
+            const user = await req.db.users.create(data);
 
             console.log(user);
         } catch (error) {
@@ -13,12 +16,12 @@ module.exports = class userController{
             console.log(error, "error chiqyapti")
 
             if (error.message.startsWith("notNull Violation")) {
-				error.code = 400;
-				error.message = "Country is invalid";
-			} else if (error.message.includes("Validation error")) {
-				error.code = 400;
-				error.message = "Email already exists";
-			}
+                error.code = 400;
+                error.message = "Country is invalid";
+            } else if (error.message.includes("Validation error")) {
+                error.code = 400;
+                error.message = "Email already exists";
+            }
             next(error);
         }
     }
