@@ -1,9 +1,11 @@
 const {Sequelize } = require('sequelize');
 const countryModel =  require("../../models/countryModel");
+const relations = require('../../models/relations');
+const userModel = require("../../models/userModel");
 const init = require("./init");
 
-const {sequelize, Joi, sequelizeJoi} = require("sequelize-joi");
-const {customError} =  require("../../helpers/customError");
+// const {sequelize} = require("sequelize-joi");
+// const {customError} =  require("../../helpers/customError");
 
 
 
@@ -18,7 +20,7 @@ const sequelize =  new Sequelize(process.env.PG_CONNECTION_URL,{
     logging: false,
 });
 
-sequelizeJoi(sequelize);
+// sequelizeJoi(sequelize);
 
 
 module.exports = async function pg(){
@@ -26,7 +28,9 @@ module.exports = async function pg(){
         await sequelize.authenticate();
 
         let db =  {};
-        db.countries = await countryModel(sequelize, Sequelize, Joi,customError);
+        db.countries = await countryModel(sequelize, Sequelize);
+        db.users = await userModel(sequelize, Sequelize);
+        await relations(db);
 
         await sequelize.sync({
             force:false,

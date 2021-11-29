@@ -1,4 +1,4 @@
-module.exports = async (sequelize, Sequelize,Joi,customError) => {
+module.exports = async (sequelize, Sequelize) => {
 	return await sequelize.define("countries", {
 		country_id: {
 			type: Sequelize.INTEGER,
@@ -8,12 +8,12 @@ module.exports = async (sequelize, Sequelize,Joi,customError) => {
 		country_name: {
 			type: Sequelize.STRING,
 			allowNull: false,
-            schema: Joi.string().min(4).required().error(new customError(400,"Name is invalid"))
+            // schema: Joi.string().min(4).required().error(new customError(400,"Name is invalid"))
 		},
 		country_code: {
 			type: Sequelize.STRING,
 			allowNull: false,
-            schema: Joi.string().required().error(new customError(400,"Code is invalid"))
+            // schema: Joi.string().required().error(new customError(400,"Code is invalid"))
 		},
 	});
 };
