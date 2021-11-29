@@ -7,6 +7,7 @@ const {customErrorMiddleware} =  require("./middlewares/customErrorMiddleware");
 const routes = require("./routes");
 const app = express();
 const pg = require("./modules/pg/pg");
+const { errorHandleMiddleware } = require("./helpers/customError");
 
 
 
@@ -34,6 +35,7 @@ async function server(){
 
         // app.use(databaseMiddleware);
         app.use("/v1",routes);
+        app.use(errorHandleMiddleware)
 
     } catch (error) {
         console.log("Server error:", error);
