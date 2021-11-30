@@ -1,7 +1,11 @@
 const {
     generateCrypt,
     compareCrypt
-} = require("../modules/bcrypt")
+} = require("../modules/bcrypt");
+
+const {
+    createToken
+} = require("../modules/jwt");
 const userValidations = require("../validations/userValidation")
 module.exports = class userController {
     static async userCreateAccountPostController(req, res, next) {
@@ -18,7 +22,7 @@ module.exports = class userController {
 
             const session = await req.db.sessions.create({
                 session_user_agent: req.headers["user_agent"] || "Unknown",
-                user_id: user_dataValues.user_id,
+                user_id: user.dataValues.user_id,
             });
 
 
@@ -32,7 +36,7 @@ module.exports = class userController {
                 ok: true,
                 message: "User created successfully",
                 data: {
-
+                    token,
                 }
             })
         } catch (error) {
@@ -72,19 +76,26 @@ module.exports = class userController {
             await req.db.sessions.destroy({
                 where: {
                     session_user_agent: req.headers["user_agent"] || "Unknown",
-                    user_id: user_id
+                    user_id: user.user_id
                 }
             });
 
             const session = await req.db.sessions.create({
                 session_user_agent: req.headers["user_agent"] || "Unknown",
-                user_id: user_id
+                user_id: user.user_id
 
             })
 
             const token = createToken({
                 session_id: session.dataValues.session_id,
+                role: user.user_role || "user"
             });
+
+            // await req.db.attempts.destroy({
+			// 	where: {
+			// 		user_id: user.user_id,
+			// 	},
+			// });
 
             res.status(201).json({
                 ok: true,
