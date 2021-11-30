@@ -1,7 +1,9 @@
 const {verify, sign} = require('jsonwebtoken');
 
 module.exports.createToken = function createToken(data){
-    return sign(data, process.env.SECRET_WORD);
+    return sign(data, process.env.SECRET_WORD,{
+        expiresIn: "3d",
+    });
 }
 
 
