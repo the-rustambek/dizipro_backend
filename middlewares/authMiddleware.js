@@ -2,7 +2,7 @@ const {
     checkToken
 } = require("../modules/jwt");
 
-module.exports = function authMiddleware(req, res, next) {
+module.exports = async function authMiddleware(req, res, next) {
     try {
         const token = req.headers["authorization"];
         // console.log(token);
@@ -21,9 +21,11 @@ module.exports = function authMiddleware(req, res, next) {
             raw: true,
         });
 
-        if (!session) throw new res.error(401, "Unauthorized");
+        console.log(session)
 
-        req.session = session;
+        // if (!session) throw new res.error(401, "Unauthorized");
+
+        // req.session = session;
 
         next();
 
