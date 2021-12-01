@@ -105,6 +105,7 @@ module.exports = class userController {
                 }
             })
         } catch (error) {
+            console.log(error)
             next(error)
 
         }
