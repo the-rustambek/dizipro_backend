@@ -3,7 +3,9 @@ const {homeGetController} = require('../controllers/homeController');
 const authMiddleware = require('../middlewares/authMiddleware');
 
 
+
+homeRoute.use(authMiddleware);
 homeRoute.get("/",homeGetController);
-homeRoute.use(authMiddleware)
+
 
 module.exports = homeRoute;

@@ -91,11 +91,11 @@ module.exports = class userController {
                 role: user.user_role || "user"
             });
 
-            // await req.db.attempts.destroy({
-			// 	where: {
-			// 		user_id: user.user_id,
-			// 	},
-			// });
+            await req.db.attempts.destroy({
+				where: {
+					user_id: user.user_id,
+				},
+			});
 
             res.status(201).json({
                 ok: true,
@@ -112,5 +112,6 @@ module.exports = class userController {
     }
 
 
+        
 
 }

@@ -5,7 +5,7 @@ const {
 module.exports = async function authMiddleware(req, res, next) {
     try {
         const token = req.headers["authorization"];
-        // console.log(token);
+        // console.log(token, "tokenda error bor");
 
         if (!token) throw new res.error(401, "Unauthorized");
 
@@ -17,20 +17,23 @@ module.exports = async function authMiddleware(req, res, next) {
             where: {
                 session_id: data.session_id,
             },
-            include: req.db.users,
+            include: {
+                model: req.db.users,
+            },
             raw: true,
         });
 
-        console.log(session)
+        console.log(session, "sessiyada error bor")
 
-        // if (!session) throw new res.error(401, "Unauthorized");
+        if (!session) throw new res.error(401, "Unauthorized");
 
-        // req.session = session;
+        req.session = session;
 
         next();
 
 
     } catch (error) {
+        console.log(error, "authmiddleware da error bor")
         next(error)
     }
 }
